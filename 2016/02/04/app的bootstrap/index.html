@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="blog lori webapp"><title>app的bootstrap | 这是一次旅行</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">app的bootstrap</h1><a id="logo" href="/.">这是一次旅行</a><p class="description">show yourself</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">app的bootstrap</h1><div class="post-meta">Feb 4, 2016<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><div class="post-content"><p>做一个App，需要很多东西。<br>不定期更新。</p>
+<p>###团队</p>
+<p>工欲善其事，必先利其器。</p>
+<p>###需求管理</p>
+<p>支持版本、迭代、需求的创建与管理。<br>产品经理在上面录入需求，开发参照开发，测试参照写测试用例，并进行状态流转。<br>国内大厂如腾讯都有内部自己开发的管理平台如tapd。<br>小团队可以使用轻量级的平台如：<br>国外：Trello、Basecamp、Jira、Asana<br>国内：Tower、Teambition、FengChe<br>也可以使用较传统的重型工具如 禅道（真的很丑，但是流程和大公司内的比较像）</p>
+<p>###缺陷管理</p>
+<p>测试在上面录入从各个渠道收集到的bug，分配给开发，并进行状态的流转。<br>在诸如tapd、禅道这样的传统平台上，都包含缺陷管理模块。反而在上文中的轻量级的项目管理平台里，缺陷管理并不是非常容易做，简单的还好，复杂的归类、人员间的流转就不容易了。<br>传统的解决方案如Bugzilla等太老旧不利于使用，目前没看到特别好的方案。</p>
+<p>###代码托管</p>
+<p>一流小团队用Git，买GitHub或者自建GitLab或者用第三方的代码托管甚至云开发平台，如Coding之类。<br>不入流的大多用SVN。</p>
+<p>###云服务＋CDN</p>
+<p>选定云服务商和CDN服务商，不再自己买机器租机房。<br>国外主流用Amazon家，国内主流用阿里云，腾讯百度也有云但是稳定性不说了。新浪的云是打酱油的。也有青云之类做的不错。<br>CDN选择就更多了，云CDN是主流，国外如Akamai 、CloudFlare，国内阿里云的CDN最广泛。</p>
+<p>###持续集成与分发</p>
+<p>大多数团队在初期都会忽视持续集成，然后它很重要。<br>每次有代码提交到主干或每日特定时间，都应自动以最新代码编译一次出一个app版本，并上传到分发渠道上，如 TestFlight。这样产品、测试和其他外围人员随时可以安装并检查最新版本。<br>传统的持续集成有Jenkins/Hudson，自己部署自己设定，iOS的话还有Xcode Server的bot。但云持续集成也在逐渐流行起来，Travis CI就是其中的典型。<br>内部分发渠道上，TestFlight在Apple买了之后就不是那么好用。国外还有HockeyApp，国内Fir.im、蒲公英则是使用的比较多的分发渠道。<br>而将持续集成和分发渠道联系在一起，除了自己写脚本外，也有第三方工具如<a href="http://nomad-cli.com" target="_blank" rel="external">http://nomad-cli.com</a> 和 <a href="https://fastlane.tools" target="_blank" rel="external">https://fastlane.tools</a></p>
+<p>###设计资源交付与共享</p>
+<p>设计师与开发之间需要一个平台来共享设计稿、切图、标注等资源。<br>有些团队是给设计师代码权限，让设计师直接把切图提交到代码里，也有些团队是用Dropbox等云盘来和开发分享切图。<br>另一方面，还有Sketch＋Zeplin这样的工具来分享设计稿、自动批量切图并支持自动查看标注，把设计师从标注中解放出来。结合上面提到的云盘，可以实现自动切图＋标注＋同步到开发一气呵成。</p>
+<p>###内部沟通工具</p>
+<p>内部沟通工具和传统IM不同，讲究的是：</p>
+<ol>
+<li>自带组织构架、人员查找</li>
+<li>方便发起群组讨论</li>
+<li>多人文件共享场景更多</li>
+<li>和邮件、持续集成等其他系统的互通互动更重要</li>
+<li>手机和桌面版本同样重要</li>
+</ol>
+<p>不入流团队爱用的QQ微信就不说了。<br>以前腾讯的RTX用的比较多，但明显缺点是RTX的Mac版问题很多，Windows版也很老旧（不是腾讯内用的新版），手机版也很差。<br>后起之秀如Slack、瀑布IM、BearyChat等值得尝试，特点是支持大量第三方服务。<br>阿里也有做钉钉，但针对的是传统企业，功能臃肿不实用。</p>
+<p>###邮件系统</p>
+<p>在保守乃至正常的工作流程中，邮件都是有效的事务推动和留痕工具。需要具备：</p>
+<ol>
+<li>和组织构架打通</li>
+<li>清晰的邮件组划分</li>
+<li>和日历、会议邀请挂钩</li>
+<li>与沟通工具的互通。</li>
+</ol>
+<p>目前只看到微软的Exchange可以满足此类需求。</p>
+<p>###开发、测试、线上环境及快速上线流程</p>
+<p>设定三个不同的环境，确保数据同步。并且支持每个小的代码变动可以自助式的在三个环境逐个部署并验证，最终可以在短时间内快速上线。避免传统式的开发一大坨、部署一礼拜的情况。</p>
+<p>###OA系统</p>
+<p>外围事务，如请假、调休、事务投票、个人信息补全等。与核心业务无关，但是能避免杂事影响效率。</p>
+<p>###App</p>
+<p>一个App需要有的基本模块</p>
+<p>###账号体系+第三方登录</p>
+<p>email/手机号短信验证是主流的注册账号体系，有需求可再加微博、微信、QQ的第三方登录。涉及到在三者的开放平台注册并通过审核拿到api key。<br>第三方登录有第三方的SDK可以支持，但其中还不乏一些不靠谱的平台。<br>登录时</p>
+<p>###版本更新提示与强制更新</p>
+<p>在早期版本就需要预埋好的功能。尽管 Apple 不允许 App 内出现检查更新字样，但仍然可以在有更新的时候弹出更新提示。并且为以防版本出现重大bug，需要支持对老版本可以封停的能力，也就是强制更新，不更新不给用。</p>
+<p>###Push服务</p>
+<p>一个强健的Push服务后台，支持高效率的大量Push发送，以及对每条Push打开率的统计。大多数团队自己开发的后台都做不到，包括发送效率和打开率统计。额外从运营层面还会需要支持预设定时发送Push等功能。<br>因此大多数情况下，建议使用第三方的方案。国内做的主要有百度云推送、极光、云巴、个推、腾讯信鸽、友盟，据传百度云推送团队已经没了，极光的后台感觉粗糙，个推貌似新浪微博也没再用了送达率低，云巴不知道，此外知乎用的是LeanCloud的推送。</p>
+<p>###短信下行服务</p>
+<p>手机号注册等功能涉及验证码短信下行，需要有一个低延迟、高送达率、不受运营商白名单影响的短信服务商接入。<br>国内的短信服务商多如牛毛，收费也从1毛到5分不等，但基本上处于便宜没好货的状态。除了送达率的问题，还有对于17*的新号段常有支持不好，以及运营商有白名单，名单中的用户容易送达不到。<br>最简单的方式是直接和移动等运营商谈，价格不贵且专线保证送达率。其他服务商的免费体验账号都存在上述问题，客服一般反馈都说付费了就好了。</p>
+<p>###邮件发送服务</p>
+<p>重邮件的业务，一定需要一个强大的邮件代发业务，因为：</p>
+<ol>
+<li>edm邮件需要统计到达率和打开率等，需要支持针对特定用户发送，传统的邮件服务器并没有这些功能。</li>
+<li>大多数邮件代发服务提供足够多的样式，可以快速编辑产出</li>
+<li>国内许多邮件商对发送IP等都有过滤限制，邮件代发服务则提供白名单的途径可以避免被过滤。<br>常用的邮件代发服务有：Mailchimp、Mailgun、Sendgrid、SendCloud。其中SendCloud是国内做的比较不错的。<br>###数据上报与统计</li>
+</ol>
+<p>支持App内的各类规模类、点击类数据上报，并且有支持各种复杂分析的后台，最好能与用户账号挂钩。<br>这方面国内算友盟做的最有名，其他还有TalkingData、百度统计等，但做的都一般，国外的Flurry、Localytics更为成熟，Google Analytics for Mobile也很强大。<br>一般建议一个App接入至少两个数据上报平台，在也就是在App内封装一层。</p>
+<p>###内测问题反馈</p>
+<p>用于在内测（甚至正式版本）用户发现问题时，可以简单快速的将当前问题反馈到开发团队。需要支持截图和注释。<br>目前已知有Instabug支持此项功能，但是Instabug的管理功能很差，幸好他家支持自动与其他缺陷管理平台集成。<br>建议配置成尽在内测版时启用该项功能。</p>
+<p>###用户互动</p>
+<p>在App中放置入口，允许用户向开发团队反馈问题或提意见，并且可以收到开发团队的回复。一般以聊天或私信的形式。<br>国外主要有UserVoice、ZenDesk等，国内LeanCloud中包含该服务，还有逸创云客服算是对ZenDesk复制的比较好的，比其他的更多的是有帮助中心页面可用；此外还有Udesk和美洽。<br>其他App如知乎等则选择将该功能和自己的私信功能和在一起。</p>
+<p>###Crash上报&amp;质量监控</p>
+<p>收集每个版本上线的同类Crash的log和堆栈。后台应支持快速转入缺陷管理。<br>此类服务国外Crashlytics较有名，国内则有腾讯的Bugly做的不错。同时也可以选择自己架设相关上报Server，也有足够多的开源方案。</p>
+<p>###官方网站+博客</p>
+<p>如有网页版，那么网站会有额外的工作。</p>
+<ol>
+<li>搜索引擎优化，这里涉及到的除了传统内容，还有和iOS 9相结合的地方</li>
+<li>登录时的机器识别，避免被批量注册号码。这里的服务有比如geetest等。<br>###App分享</li>
+</ol>
+<p>允许用户从App内简单分享当前App到微信、微博等。由于微信的存在，需要开发一个承接页用来判断是否在微信中打开，是则跳转至应用宝的产品页。</p>
+<p>###内容分享</p>
+<p>允许分享应用内内容到微信、微博、QQ等。大多数团队选择用第三方的SDK来实现一次性支持多家分享。但目前大多数第三方SDK的使用交互和样式都非常非常烂。<br>考虑到分享出去的网页存在不断被转发的情况，所以需要支持Open Graph protocol让微信等app可以正确的读出预览图片、描述而不是显示一个默认的链接。</p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="https://lorizone0906.github.io/2016/02/04/app的bootstrap/" data-id="cj6eingbu000aavpgt9hsqoc4" class="article-share-link">分享</a><div class="tags"></div><div class="post-nav"><a href="/2016/05/09/runtime跳转/" class="pre">runtime跳转</a><a href="/2015/10/13/Testflight/" class="next">Testflight</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://lorizone0906.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/07/18/react入门/">react入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/17/移动端布局/">移动端布局</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/12/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/详细版用Supervisor守护你的Node-js进程/">详细版用Supervisor守护你的Node.js进程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/26/Javascript的继承与多态/">Javascript的继承与多态</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/23/流媒体协议介绍（rtp-rtcp-rtsp-rtmp-mms-hls）/">流媒体协议介绍（rtp/rtcp/rtsp/rtmp/mms/hls）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/02/深入理解CSS过渡transition/">深入理解CSS过渡transition</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/20/js继承的几种实现方式/">js继承的几种实现方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/16/react程序模板/">react程序模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/22/iap银行信息/">iap银行信息</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">这是一次旅行.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

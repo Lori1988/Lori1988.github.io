@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="blog lori webapp"><title>apple开发者证书 | 这是一次旅行</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">apple开发者证书</h1><a id="logo" href="/.">这是一次旅行</a><p class="description">show yourself</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">apple开发者证书</h1><div class="post-meta">Jul 28, 2015<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><div class="post-content"><p>本文假设你已经有一些基本的Xcode开发经验, 并注册了iOS开发者账号.</p>
+<p>##相关基础</p>
+<p>###加密算法</p>
+<p>现代密码学中, 主要有两种加密算法: 对称密钥加密 和 公开密钥加密.</p>
+<p>###对称密钥加密</p>
+<p>对称密钥加密(Symmetric-key algorithm)又称为对称加密, 私钥加密, 共享密钥加密.</p>
+<p>####这类算法在加密和解密时使用相同的密钥.<br>例如: 最常见的应用场景 - 系统登陆.<br>要成功登陆系统, 你必须输入正确的密码, 这密码是唯一的, 是与创建时一样的. 同样 的, 其他人要成功登陆, 他也要输入这唯一的正确的密码.</p>
+<p>###公开密钥加密</p>
+<p>公开密钥加密(public-key cryptography, 也称为非对称密钥加密).</p>
+<p>####这类算法在加密和解密时使用不相同的密钥.<br>这类加密算法对应有两个密钥: 公钥和私钥. 公钥, 是公开的, 任何人都可以获得; 私钥 , 是私密的, 只由持有者所有.<br>这类加密算法的特点是: 用公钥加密的内容只能用私钥解密, 用私钥加密的内容只能 用公钥解密.<br>这类加密算法的特点决定了, 它即可以用于实现数据加密, 又可以用于实现身份认证 (数字签名).</p>
+<p>###加密 &amp; 认证</p>
+<p>我们需要区分加密和认证这两个基本概念.</p>
+<ul>
+<li>加密是将数据资料加密, 使得非法用户即使取得加密过的资料, 也无法获取正确的资料 内容, 所以数据加密可以保护数据, 防止监听攻击. 其重点在于数据的安全性.</li>
+<li>身份认证是用来判断某个身份的真实性, 确认身份后, 系统才可以依其身份给予相应的 权限. 其重点在于用户的真实性.<br>要实现这两个要求(加密和认证), 都需要用到加密算法, 但并不是所有的算法都可实现身 份认证. 身份认证现在一般使用公开密钥加密算法.<br>下面将重点说明如何使用公开密钥加密算法实现加密和认证.<br>###如何实现加密?</li>
+</ul>
+<p>对于某一用公钥加密的数据, 只能由对应的私钥解密.<br>例如, 我要给你发一封加密邮件. 我必须有你的公钥, 我用你的公钥给邮件加密. 这样 就能保证邮件不被别人看到, 而且不被篡改. 因为只有你可以用你自己的私钥解密.</p>
+<p>###如何实现认证?</p>
+<p>对于某一用私钥加密的数据, 只能由对应的公钥解密. (记住, 私钥只由持有人所有)<br>用我(A1)的私钥给邮件加密, 发给你(B1)之后, 你能用我的公钥解密. 这样就能保证 邮件是我(A1)发的.</p>
+<p>###数字身份证 &amp; 数字证书(Certificates) &amp; 数字证书认证机构(CA) &amp; 根证书</p>
+<p>####数字身份证</p>
+<p>数字身份证, 是身份标识方式的一种, 是一对”钥匙”, 即一对公钥&amp;私钥. 它一般 用本地系统工具生成.<br>o</p>
+<p>###数字证书认证机构</p>
+<p>数字证书认证机构(CA, Certificate Authority), 是负责发放和管理数字证书 的权威机构, 并作为交易中受信任的第三方, 承担公钥体系中公钥的合法性 检验的责任.</p>
+<p>###数字证书</p>
+<p>数字证书, 是一种用于计算机的身分识别机制. 数字证书不是数字身份证 , 而是身份认证机构(数字证书认证机构)在数字身份证上加上数 字签名. 这一行为表示身份认证机构已认定这个持证人. 这里的”认定”是怎么做到 的呢? 参考’如何验证数字证书的有效性?’.<br>数字证书一般含这样一些信息:</p>
+<ul>
+<li>证书发布者</li>
+<li>证书持有者</li>
+<li>有效期(证书在这个时期之前或之后无效)</li>
+<li>证书持有者的公钥(*)</li>
+<li>证书扩展, 包含一些额外信息</li>
+<li>所使用的哈希算法</li>
+<li>数字签名, 该数字签名是对以上信息的哈希值用CA的私钥加密生成(*)<br>###如何验证数字证书的有效性?</li>
+</ul>
+<p>即, 如何确保数字证书是经过CA认证的呢?<br>注意: 对于某一用私钥加密的数据, 只能由对应的公钥解密.<br>原理: 计算数据证书的数据信息的哈希值H1, 对证书上的数字签名用CA的公钥解密得 H2, 如果H1等于H2, 则该证书有效, 且是经CA认证的.<br>CA的公钥如何获得呢? 它包含在根证书里.</p>
+<p>###根证书</p>
+<p>根证书, 是CA给自己颁发的数字证书, 是信任链的起始点. 它一 般放在CA网站上, 供任何人下载.</p>
+<p>##数字签名</p>
+<p>数字签名, 是一种类似写在纸上的普通的物理签名, 但是使用了公钥加密领域的 技术实现, 用于鉴别数字信息的方法.<br>数字签名具有完整性, 不可抵赖性(即不可否认性).<br>从’如何实现认证?’一节, 我们知道可以利用公开加密算法的特点实现”认证”, 也就是签 名. 但是这会有一个问题, 任何人都可以或可能冒充我(A1)! 即, 任何人都可以冒充我 (A1)把他经用他的私钥加密的数据和他的公钥发给你. 也就是说, 你无法确保你接收到的 公钥就是我(A1)的!<br>所以, 这就需要一个机制来保证. 这机制就是基于前面所说的”数字证书”和”CA”. 它可确 保我(A1)是经过CA认证的.</p>
+<p>###数字签名原理</p>
+<ul>
+<li>签名:<br>发送者先对要发送的”数据”计算一个哈希值, 再用自己的私钥对这个哈希值加密生成一 个”签名(值)”, 同时发送者要拥有一个向CA申请得到的”数字证书”(记住, 其记录有公 钥), 最后发送者把”数据”, “签名(值)”和”数字证书”一起发送给接收者.</li>
+<li>验证签名:<br>接收者接收到发来的”数据”, “签名(值)”和”数字证书”后, 会作一系列验证来判断这一数 字签名是否有效:<ul>
+<li>打开并验证”数字证书”的有效性;</li>
+<li>计算”数据”的哈希值H1, 用”数字证书”记录的公钥对”签名(值)”进行解密得到值H2, 如 果H1==H2, 则该”数字签名”有效.</li>
+</ul>
+</li>
+</ul>
+<p>##Xcode代码签名相关</p>
+<p>Keychain</p>
+<p>MAC下用于存储和管理密钥等私密信息的工具.<br>Identifiers / Bundle ID / App ID</p>
+<p>这是应用的唯一标识.<br>Device UUID</p>
+<p>这是设备的唯一标识.<br>Provisioning Profiles</p>
+<p>这就是我们最后要生成的 Profiles, 它记录了 App ID, UUID 和其所信任的证书.<br>当Xcode要把一个应用部署到真机上时, 会作相应检验:</p>
+<ul>
+<li>Keychain中是否有相匹配的有效证书? 参考’如何验证数字证书的有效性?’</li>
+<li>Profiles是否有效? 参考’数字签名原理’</li>
+<li>要部署的App的App ID是否与Profiles记录的App ID相匹配?</li>
+<li>UUID是否相匹配?<br>只有在所有检验都通过了, 才能部署到真机上.<br>##Start</li>
+</ul>
+<p>生成密钥</p>
+<p>填上Email和Name, 并选择”Saved to disk”.<br>最后在”keys”下生成一对新的密钥, 为了以后分辨方便, 最好对它重新命名, 双击可以重 命名. 同时也会生成一个CRS文件.</p>
+<p>安装根证书</p>
+<p>这个证书叫做 Worldwide Developer Relations Certificate Authority, 通过这个链接 可以下载: <a href="https://developer.apple.com/certificationauthority/AppleWWDRCA.cer" target="_blank" rel="external">https://developer.apple.com/certificationauthority/AppleWWDRCA.cer</a>, 一般下载下来的文件名为: AppleWWDRCA.cer.<br>该证书一般由 Xcode 自动安装.<br>向Apple(CA)申请开发者证书</p>
+<p>登陆苹果开发者中心, 到 Certificates, Identifiers &amp; Profiles | iOS Apps | Certificates | Development 下, 新增一个Certificates:</p>
+<p>点下一步会出现, 要求你先生成一个CRS文件, 这就是我们在”生成密钥”时做的:</p>
+<p>直接下一步, 并把刚才生成的CRS文件上传, 最后提交生成证书. 把它下载下来, 双击, 其会自动添加到Keychains中.</p>
+<p>###创建 App ID</p>
+<p>在Identifiers下创建一个新的App ID.<br>把设置的UUID加入Devices注册列表</p>
+<p>在Devices下添加.<br>生成Profiles</p>
+<p>在 Certificates, Identifiers &amp; Profiles | iOS Apps | Provisioning Profiles | Development 下, 点击添加一个新的Profiles.<br>到”选择证书”页面时, 有一点要注意, 最好只选上刚刚生成的证书, 不要选择所有. 因为 “选择所有”在Keychain中已有别的证书下, 容易出现各种奇葩问题, 后面会有详细说明.</p>
+<p>最后, 把它下载下来, 双击添加到Xcode中.</p>
+<p>配置到Xcode</p>
+<p>至此, 一切OK!<br>可能遇到的错</p>
+<p>如果你按上面的执行下来, 最后一编译应用发现还是不行, 报类似这种错,</p>
+<p>在XcodeOrganizer中也会显示出错:</p>
+<p>这错一般是由于证书不匹配, 要检查:</p>
+<ul>
+<li>保证生成Profile时, 选择且只选择了一个证书;</li>
+<li>保证Keyschain里没有重复的证书.</li>
+</ul>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="https://lorizone0906.github.io/2015/07/28/apple开发者证书/" data-id="cj6eingbg0008avpgo9chhlbf" class="article-share-link">分享</a><div class="tags"></div><div class="post-nav"><a href="/2015/08/21/GCD的“艺术”/" class="pre">GCD的“艺术”</a><a href="/2015/07/04/让你的iOS静态库支持armv7s/" class="next">让你的iOS静态库支持armv7s</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://lorizone0906.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/07/18/react入门/">react入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/17/移动端布局/">移动端布局</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/12/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/详细版用Supervisor守护你的Node-js进程/">详细版用Supervisor守护你的Node.js进程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/26/Javascript的继承与多态/">Javascript的继承与多态</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/23/流媒体协议介绍（rtp-rtcp-rtsp-rtmp-mms-hls）/">流媒体协议介绍（rtp/rtcp/rtsp/rtmp/mms/hls）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/02/深入理解CSS过渡transition/">深入理解CSS过渡transition</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/20/js继承的几种实现方式/">js继承的几种实现方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/16/react程序模板/">react程序模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/22/iap银行信息/">iap银行信息</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">这是一次旅行.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

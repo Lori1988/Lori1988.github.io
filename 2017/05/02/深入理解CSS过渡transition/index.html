@@ -1,0 +1,287 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="blog lori webapp"><title>深入理解CSS过渡transition | 这是一次旅行</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">深入理解CSS过渡transition</h1><a id="logo" href="/.">这是一次旅行</a><p class="description">show yourself</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">深入理解CSS过渡transition</h1><div class="post-meta">May 2, 2017<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><div class="post-content"><p>前面的话</p>
+<p>　　通过过渡transition，可以让web前端开发人员不需要javascript就可以实现简单的动画交互效果。过渡属性看似简单，但实际上它有很多需要注意的细节和容易混淆的地方。本文将介绍和梳理关于CSS过渡的知识</p>
+<p>定义</p>
+<p>　　过渡transition是一个复合属性，包括transition-property、transition-duration、transition-timing-function、transition-delay这四个子属性。通过这四个子属性的配合来完成一个完整的过渡效果</p>
+<p>transition-<br>property: 过渡属性(默认值为all)<br>transition<br>-<br>duration: 过渡持续时间(默认值为0s)<br>transiton<br>-timing-<br>function: 过渡函数(默认值为ease函数)<br>transition<br>-delay: 过渡延迟时间(默认值为0s)<br>　　[注意]IE9-不支持该属性，safari3.1-6、IOS3.2-6.1、android2.1-4.3需要添加-webkit-前缀；而其余高版本浏览器支持标准写法</p>
+<p>.test{</p>
+<pre><code>height
+</code></pre><p>: 100px;</p>
+<pre><code>width
+</code></pre><p>: 100px;</p>
+<pre><code>background-color
+</code></pre><p>: pink;</p>
+<pre><code>transition-duration
+</code></pre><p>: 3s;<br>/<em>     以下三值为默认值，稍后会详细介绍 </em>/</p>
+<pre><code>transition-property
+</code></pre><p>: all;</p>
+<pre><code>transition-timing-function
+</code></pre><p>: ease;</p>
+<pre><code>transition-delay
+</code></pre><p>: 0s;<br>}</p>
+<p>.test:hover<br>{</p>
+<pre><code>width
+</code></pre><p>: 500px;<br>}</p>
+<div class="test"></div><br>//鼠标移动到元素上，会出现宽度变化效果<br><br>复合属性<br><br>　　过渡transition的这四个子属性只有<transition-duration>是必需值且不能为0。其中，<transition-duration>和<transition-delay>都是时间。当两个时间同时出现时，第一个是<transition-duration>，第二个是<transition-delay>；当只有一个时间时，它是<transition-duration>，而<transition-delay>为默认值0<br><br>transition: <transition-property> || <transition-duration> || <transition-timing-function> || <transition-delay><br>　　[注意]transition的这四个子属性之间不能用逗号隔开，只能用空格隔开。因为逗号隔开的代表不同的属性(transition属性支持多值，多值部分稍后介绍)；而空格隔开的代表不同属性的四个关于过渡的子属性<br><br><br>.test{<br><br>    height<br>: 100px;<br><br>    width<br>: 100px;<br><br>    background-color<br>: pink;<br>/<em>代表持续时间为2s，延迟时间为默认值0s</em>/<br><br>    transition；2s;<br>}<br><br>.test:hover<br>{<br><br>    width<br>: 500px;<br>}<br><br><div class="test"></div>
+
+<p>.test{</p>
+<pre><code>height
+</code></pre><p>: 100px;</p>
+<pre><code>width
+</code></pre><p>: 100px;</p>
+<pre><code>background-color
+</code></pre><p>: pink;<br>    /<em>代表持续时间为1s，延迟时间为2s</em>/</p>
+<pre><code>transition
+</code></pre><p>: 1s 2s;<br>}</p>
+<p>.test:hover<br>{</p>
+<pre><code>width
+</code></pre><p>: 500px;<br>}</p>
+<div class="test"></div>
+
+
+<p>过渡属性</p>
+<p>transition-property</p>
+<p>　　值: none | all | <transition-property>[,<transition-property>]*</transition-property></transition-property></p>
+<p>　　初始值: all</p>
+<p>　　应用于: 所有元素</p>
+<p>　　继承性: 无</p>
+<p>none: 没有指定任何样式<br>all: 默认值，表示指定元素所有支持transition<br>-property属性的样式<transition-property>: 可过渡的样式，可用逗号分开写多个样式<br>可过渡的样式</transition-property></p>
+<p>　　不是所有的CSS样式值都可以过渡，只有具有中间值的属性才具备过渡效果</p>
+<p>Vstart = 开始值; Vend = 结束值; Vres = 中间值; p =<br> 过渡函数的输出值<br>Vres<br>= (1 - p) <em> Vstart + p </em><br> Vend<br>当Vres具有有效值时，则该CSS样式可过渡</p>
+<p>颜色: color background-color border-color outline-<br>color<br>位置: backround<br>-<br>position left right top bottom<br>长度:<br>    [<br>1]max-height min-height max-width min-<br>width height width<br>    [<br>2]border-width margin padding outline-width outline-<br>offset<br>    [<br>3]font-size line-height text-indent vertical-<br>align<br>    [<br>4]border-spacing letter-spacing word-<br>spacing<br>数字: opacity visibility z<br>-index font-<br>weight zoom<br>组合: text<br>-shadow transform box-<br>shadow clip<br>其他: gradient</p>
+<p>过渡持续时间</p>
+<p>　　该属性的单位是秒s或毫秒ms</p>
+<p>transition-duration</p>
+<p>　　值: <time>[,<time>]*</time></time></p>
+<p>　　初始值: 0s</p>
+<p>　　应用于: 所有元素</p>
+<p>　　继承性: 无</p>
+<p>　　[注意]该属性不能为负值</p>
+<p>　　[注意]若该属性为0s则为默认值，若为0则为无效值。所以必须带单位</p>
+<p>　　[注意]该值为单值时，即所有过渡属性都对应同样时间；该值为多值时，过渡属性按照顺序对应持续时间</p>
+<p>//DEMO中的过渡属性值<br>transition-property: width,background;</p>
+<p>过渡延迟时间</p>
+<p>　　该属性定义元素属性延迟多少时间后开始过渡效果，该属性的单位是秒s或毫秒ms</p>
+<p>transition-delay</p>
+<p>　　值: <time>[,<time>]*</time></time></p>
+<p>　　初始值: 0s</p>
+<p>　　应用于: 所有元素</p>
+<p>　　继承性: 无</p>
+<p>　　[注意]该属性若为负值，无延迟效果，但过渡元素的起始值将从0变成设定值(设定值=延迟时间+持续时间)。若该设定值小于等于0，则无过渡效果；若该设定值大于0，则过渡元素从该设定值开始完成剩余的过渡效果</p>
+<p>　　[注意]若该属性为0s则为默认值，若为0则为无效值。所以必须带单位</p>
+<p>　　[注意]该值为单值时，即所有过渡属性都对应同样时间；该值为多值时，过渡属性按照顺序对应持续时间</p>
+<p>//DEMO中的过渡属性值<br>transition-property: width,background;</p>
+<p>过渡时间函数</p>
+<p>　　过渡时间函数用于定义元素过渡属性随时间变化的过渡速度变化效果</p>
+<p>transition-timing-function</p>
+<p>　　值: <timing-function>[,<timing-function>]*</timing-function></timing-function></p>
+<p>　　初始值: ease</p>
+<p>　　应用于: 所有元素</p>
+<p>　　继承性: 无</p>
+<p>取值</p>
+<p>　　过渡时间函数共三种取值，分别是关键字、steps函数和bezier函数</p>
+<p>steps函数</p>
+<p>　　steps步进函数将过渡时间划分成大小相等的时间时隔来运行</p>
+<p>　　steps步进函数为</p>
+<p>steps(<integer>[,start | end]?)</integer></p>
+<p><integer><br>:用来指定间隔个数(该值只能是正整数)<br>第二个参数: 该参数可选，默认是end，表示开始值保持一次；若参数为start，表示开始不保持</integer></p>
+<p>贝塞尔曲线</p>
+<p>　　贝塞尔曲线通过p0-p3四个控制点来控制，其中p0表示(0,0)，p3表示(1,1)。而<transition-timing-function>就是通过确定p1(x1,y1)和p2(x2,y2)的值来确定的</transition-timing-function></p>
+<p>transition-timing-function: cubic-bezier(x1,y1,x2,y2);<br>　　[注意]x1,y1,x2,y2都是0到1的值(包括0和1)</p>
+<p>关键字</p>
+<p>　　关键字其实是bezier函数或steps函数的特殊值</p>
+<p>ease: 开始和结束慢，中间快。相当于cubic-bezier(0.25,0.1,0.25,1<br>)<br>linear: 匀速。相当于cubic<br>-bezier(0,0,1,1<br>)<br>ease<br>-in: 开始慢。相当于cubic-bezier(0.42,0,1,1<br>)<br>ease<br>-out: 结束慢。相当于cubic-bezier(0,0,0.58,1<br>)<br>ease<br>-in-out: 和ease类似，但比ease幅度大。相当于cubic-bezier(0.42,0,0.58,1<br>)<br>step<br>-start: 直接位于结束处。相当于steps(1<br>,start)<br>step<br>-end: 位于开始处经过时间间隔后结束。相当于steps(1,end)</p>
+<p>多值</p>
+<p>　　transition的多个属性值用逗号分隔开表示可以同时为多个值设置过渡属性</p>
+<p>transtion: <single-transition>[,<single-transition>]*</single-transition></single-transition></p>
+<p><single-transition>: <transition-property> || <transition-duration> || <transition-timing-function> || <transition-delay><br>//property为all，timing-function为linear,delay为0s，duration为0s。表示无过渡行为<br>transition: 0s;<br>【1】若不同的transition-property值，对应的transition-delay | transition-timing-function | transition-duration的属性值都相同时，则对应的这些属性设置一个即可</transition-delay></transition-timing-function></transition-duration></transition-property></single-transition></p>
+<p>#test1{</p>
+<pre><code>transition-property
+</code></pre><p>: width,background;</p>
+<pre><code>transition-delay
+</code></pre><p>: 200ms;</p>
+<pre><code>transition-timing-function
+</code></pre><p>: linear;</p>
+<pre><code>transition-duration
+</code></pre><p>: 2s;<br>}<br>/<em>类似于</em>/</p>
+<p>#test2<br>{</p>
+<pre><code>transition
+</code></pre><p>: width 2s linear 200ms,background 2s linear 200ms;<br>}</p>
+<p>【2】当transition-property值的个数多于对应的transition-delay | transition-timing-function | transition-duration的属性值(属性值的个数大于1个)时，将按顺序开始取值</p>
+<p>#test1{</p>
+<pre><code>transition-property
+</code></pre><p>: width,background,opacity;</p>
+<pre><code>transition-duration
+</code></pre><p>: 2s,500ms;</p>
+<pre><code>transition-timing-function
+</code></pre><p>: linear,ease;</p>
+<pre><code>transition-delay
+</code></pre><p>: 200ms,0s;<br>}<br>/<em>类似于</em>/</p>
+<p>#test2<br>{</p>
+<pre><code>transition
+</code></pre><p>: width 2s linear 200ms,background 500ms ease 0s,opacity 2s linear 200ms;<br>}</p>
+<p>【3】当transition-property值的个数少于对应的transition-delay | transition-timing-function | transition-duration的属性值个数时，多余的属性值将无效</p>
+<p>#test1{</p>
+<pre><code>transition-property
+</code></pre><p>: width;</p>
+<pre><code>transition-duration
+</code></pre><p>: 2s,500ms;</p>
+<pre><code>transition-timing-function
+</code></pre><p>: linear,ease;</p>
+<pre><code>transition-delay
+</code></pre><p>: 200ms,0s;<br>}<br>/<em>类似于</em>/</p>
+<p>#test2<br>{</p>
+<pre><code>transition
+</code></pre><p>: width 2s linear 200ms;<br>}</p>
+<p>【4】当transition-property的值中出现一个无效值，它依然按顺序对应transition的其他属性值(其他属性出现无效值，处理情况也类似)</p>
+<p>#test1{</p>
+<pre><code>transition-property
+</code></pre><p>: width,wuxiao,background;</p>
+<pre><code>transition-duration
+</code></pre><p>: 2s,500ms;</p>
+<pre><code>transition-timing-function
+</code></pre><p>: linear,ease;</p>
+<pre><code>transition-delay
+</code></pre><p>: 200ms,0s;<br>}<br>/<em>类似于</em>/</p>
+<p>#test2<br>{</p>
+<pre><code>transition
+</code></pre><p>: width 2s linear 200ms,background 2s linear 200ms;<br>}</p>
+<p>【5】当transition-property的值中，有些值重复出现多次，则以最后出现的值为准，前面所有出现的值都被认定为无效值，但依然按顺序对应transition的其他属性值</p>
+<p>#test1{</p>
+<pre><code>transition-property
+</code></pre><p>: width,width,background;</p>
+<pre><code>transition-duration
+</code></pre><p>: 2s,500ms;</p>
+<pre><code>transition-timing-function
+</code></pre><p>: linear,ease;</p>
+<pre><code>transition-delay
+</code></pre><p>: 200ms,0s;<br>}<br>/<em>类似于</em>/</p>
+<p>#test2<br>{</p>
+<pre><code>transition
+</code></pre><p>: width 500ms ease 0s,background 2s linear 200ms;<br>}</p>
+<p>过渡阶段</p>
+<p>【1】过渡开始时间=样式改变的时刻+过渡延迟时间；而过渡结束时间=过渡开始时间+过渡持续时间</p>
+<p>【2】过渡起始值=过渡前的过渡属性值；而过渡结束值=过渡完成后的过渡属性值</p>
+<p>【3】过渡分为两个阶段：前进(forward)和反向(reverse)。若前进阶段进行一段时间后进入反向阶段，则反向阶段的初始值是前进阶段结束时的瞬时值</p>
+<p>【4】以hover为例，若在元素非hover态时设置transition，相当于设置的反向状态。而前进和反向是一致的。而如果在元素hover态设置transition，则前进状态以hover态设置的为准，而反向状态以非hover态设置的为准</p>
+<p>.test{<br>    width: 100px;<br>    transition: 3s;<br>}<br>.test:hover{<br>    width: 500px;<br>    transition: 500ms;<br>}</p>
+<p>【5】如果子元素和父元素过渡属性都一致。若触发子元素过渡时，父元素正在过渡，则将父元素过渡的中间态的值作为子元素过渡的初始值</p>
+<p>.box:hover{<br>    font<br>-<br>size: 50px;<br>}<br>.test:hover{<br>    font<br>-<br>size: 30px;<br>}</p>
+<p><div class="box"><br>    <div class="test">test</div><br></div><br>【6】若过渡起始值或过渡开始值为auto，则浏览器不会自己计算成具体数字值，而是不发生过渡效果。所以要过渡某些属性，首先需要将其重置成具体数字值</p>
+<p>　　[注意]低版本webkit内核浏览器存在bug，会产生反向的过渡效果</p>
+<p>.test{<br>    width: 100px;</p>
+<p>-webkit-<br>transition: width 2s;<br>    transition:width 2s;<br>}<br>.test:hover{<br>    width:auto;<br>}</p>
+<p>【7】隐式过渡是指一个属性改变时引起另一个属性的改变。如border-width是1em，则font-size改变时，border-width也会相应的改变。firefox和IE浏览器支持隐式过渡。而webkit内核浏览器不支持隐式过渡。 </p>
+<p>.test{<br>    border: 1px solid black;</p>
+<p>-webkit-transition: font-<br>size 2s;<br>    transition:font<br>-<br>size 2s;<br>    font: 20px<br>/100px “宋体”<br>;<br>}<br>.test:hover{<br>    font<br>-<br>size: 40px;<br>    border<br>-right-<br>width: 1em;<br>}</p>
+<p>触发方式</p>
+<p>　　一般地，过渡transition的触发有三种方式，分别是伪类触发、媒体查询触发和javascript触发。其中常用伪类触发包括:hover、:focus、:active等</p>
+<p>【1】hover</p>
+<p>　　鼠标悬停触发</p>
+<p>【2】active</p>
+<p>　　用户单击元素并按住鼠标时触发</p>
+<p>【3】focus</p>
+<p>　　获得焦点时触发</p>
+<p>【4】@media触发</p>
+<p>　　符合媒体查询条件时触发</p>
+<p>/<em> 把浏览器的宽度拖动到小于1000px时触发 </em>/</p>
+<p>@media (max<br>-<br>width: 1000px){<br>    .test{<br>        width: 500px;<br>    }<br>}</p>
+<p>【5】点击事件</p>
+<p>　　用户点击元素时触发</p>
+<p>test.onclick =<br> function(){<br>    test.style.width<br>= ‘300px’<br>;<br>    setTimeout(function(){<br>        test.style.width<br>= ‘100px’<br>;<br>    },<br>3000<br>);<br>}</p>
+<p>API</p>
+<p>　　关于过渡transition的事件只有一个，是transitionend事件，它发生在过渡事件完成后</p>
+<p>　　[注意]safari3.1-6、ISO3.2-6.1、android2.1-4.3需要使用webkitTransitionEnd事件</p>
+<p>属性</p>
+<p>　　transitionEnd的事件对象具有以下3个私有属性　　</p>
+<p>　　propertyName：发生transition效果的CSS属性名</p>
+<p>　　elapsedTime：代表发生实际效果的持续时间。若完整进行，则返回完整时间；若中途中断，则返回实际时间</p>
+<p>　　[注意]该属性具有兼容性问题，chrome返回持续时间加延迟时间，而其他浏览器只返回持续时间</p>
+<style>
+
+#test
+{height: 100px;width: 100px;background-color: pink;
+
+    transition
+: width 1.5s 0.5s;}
+
+#test:hover
+{width: 200px;}
+</style>
+
+<p><div id="test"></div></p>
+<script>
+
+test.addEventListener(
+"transitionend", myFunction);function
+ myFunction(e){
+    e 
+= e ||
+ event;
+    test.innerHTML 
+= 'propertyName:' + e.propertyName + '; elapsedTime:' + e.elapsedTime + '; pseudoElement:' +
+ e.pseudoElement;
+}
+</script>
+
+<p>　　 pseudoElement：如果transition效果发生在伪元素，会返回该伪元素的名称，以“::”开头。如果不发生在伪元素上，则返回一个空字符串’’</p>
+<p>　　[注意]若transition效果发生在伪元素上，IE浏览器将不会触发transitionEnd事件</p>
+<style>
+
+#test
+{height: 100px;width: 100px;position: relative;background-color: lightblue;}
+
+#test:before
+{content:'我是伪元素';position: absolute;height: 100px;width: 100px;background-color: pink;
+
+    left
+:200px;}
+
+#test:hover:before
+{width: 200px;transition: width 1.5s 0.5s;}
+</style>
+
+<p><div id="test"></div></p>
+<script>
+
+test.addEventListener(
+"transitionend", myFunction);function
+ myFunction(e){
+    console.log(event)
+    e 
+= e ||
+ event;
+    test.innerHTML 
+= 'propertyName:' + e.propertyName + '; elapsedTime:' + e.elapsedTime + '; pseudoElement:' +
+ e.pseudoElement;
+}
+</script>
+
+<p>注意事项</p>
+<p>【1】过渡分为两个阶段：前进阶段和反向阶段。transitionend事件在前进阶段结束时会触发，在反向阶段结束时也会触发</p>
+<p>var index = 0;//兼容低版本safari、IOS、android<br>test.addEventListener(“webkitTransitionEnd”, myFunction);// 标准语法<br>test.addEventListener(“transitionend”, myFunction);function<br> myFunction() {<br>    index<br>++<br>;</p>
+<p>this.innerHTML = index;</p>
+<p>}</p>
+<p>【2】过渡事件触发的次数与transition-property过渡属性的个数有关。过渡属性有几个就会触发几次</p>
+<pre><code>transition: width 1s,background-
+</code></pre><p>color 1s;</p>
+<p>-webkit-transition: width 1s,background-color 1s;<br>【3】如果过渡属性是复合属性，如border-width相当于是border-top-width、border-bottom-width、border-left-width和border-right-width这四个属性的集合。则过渡事件触发4次</p>
+<p>　　[注意]在低版本webkit内核浏览器里只触发1次</p>
+<pre><code>transition:border-
+</code></pre><p>width 1s;</p>
+<p>-webkit-transition: border-width 1s;<br>【4】如果过渡属性是默认值all，则过渡事件的次数是计算后的非复合的过渡属性的个数。如果发生过渡的属性是border-width和width，则经过计算后过渡事件应该触发5次</p>
+<p>　　[注意]在低版本webkit内核浏览器中处理情况也一致</p>
+<p>.test{<br>    width: 50px;<br>    border: 1px solid black;<br>    transition:all 1s;</p>
+<p>-webkit-<br>transition: all 1s;<br>}<br>.test:hover{<br>    border<br>-<br>width: 10px;<br>    width: 100px;<br>}</p>
+<p>【5】如果过渡延迟时间为负值，且绝对值大于等于过渡持续时间时，低版本webkit内核浏览器不会产生过渡效果，但会触发过渡事件；而其他浏览器即不会产生过渡效果，也不会触发过渡事件</p>
+<pre><code>transition:width 1s -
+</code></pre><p>1s;</p>
+<p>-webkit-transition: width 1s -1s;<br>【6】如果过渡属性存在复合属性及该复合属性包含的非复合属性，则浏览器计算复合属性的子属性时，不会重复计算已包含的属性</p>
+<p>　　[注意]低版本webkit内核浏览器会出现bug，不仅复合属性被当作一个属性来触发事件，而且会多触发一次</p>
+<p>.test{<br>    border: 1px solid black;<br>    transition:border<br>-width 1s,border-left-<br>width 2s;</p>
+<p>-webkit-transition: border-width 1s,border-left-<br>width 2s;<br>}<br>.test:hover{<br>    border<br>-<br>width:10px;<br>}</p>
+<p>　　[注意]当过渡事件执行完后，应及时使用removeEventListener取消绑定，以免对其他效果造成影响</p>
+<p>var index = 0;//兼容低版本safari、IOS、android<br>test.addEventListener(“webkitTransitionEnd”, myFunction);// 标准语法<br>test.addEventListener(“transitionend”, myFunction);function<br> myFunction() {<br>    index<br>++<br>;</p>
+<p>this.innerHTML =<br> index;</p>
+<p>if(index == 1<br>){<br>        test.removeEventListener(<br>“webkitTransitionEnd”<br>, myFunction);<br>        test.removeEventListener(<br>“transitionend”<br>, myFunction);<br>    }<br>}</p>
+<p>好的代码像粥一样，都是用时间熬出来的</p>
+</transition-delay></transition-timing-function></transition-duration></transition-property></transition-delay></transition-duration></transition-delay></transition-duration></transition-delay></transition-duration></transition-duration></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="https://lorizone0906.github.io/2017/05/02/深入理解CSS过渡transition/" data-id="cj6eingce000javpgxfn4v735" class="article-share-link">分享</a><div class="tags"></div><div class="post-nav"><a href="/2017/06/23/流媒体协议介绍（rtp-rtcp-rtsp-rtmp-mms-hls）/" class="pre">流媒体协议介绍（rtp/rtcp/rtsp/rtmp/mms/hls）</a><a href="/2017/04/20/js继承的几种实现方式/" class="next">js继承的几种实现方式</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://lorizone0906.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/07/18/react入门/">react入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/17/移动端布局/">移动端布局</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/12/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/详细版用Supervisor守护你的Node-js进程/">详细版用Supervisor守护你的Node.js进程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/26/Javascript的继承与多态/">Javascript的继承与多态</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/23/流媒体协议介绍（rtp-rtcp-rtsp-rtmp-mms-hls）/">流媒体协议介绍（rtp/rtcp/rtsp/rtmp/mms/hls）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/02/深入理解CSS过渡transition/">深入理解CSS过渡transition</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/20/js继承的几种实现方式/">js继承的几种实现方式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/16/react程序模板/">react程序模板</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/22/iap银行信息/">iap银行信息</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">这是一次旅行.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
