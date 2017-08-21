@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="blog lori webapp"><title>一个简单的瀑布流实现 | 这是一次旅行</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">一个简单的瀑布流实现</h1><a id="logo" href="/.">这是一次旅行</a><p class="description">show yourself</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">一个简单的瀑布流实现</h1><div class="post-meta">Jul 22, 2017<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><div class="post-content"><p>##瀑布流简介<br>主要是运用Html+CSS+JavaScript（DOM对象和window对象）来实现一个瀑布流，最终效果是在页面中滚动鼠标不断地加载图片永远划不到头，像百度图片这样的，在没有设置分页的的情况下，当滚动滚动条的时候页面从数据库源源不断的加载图片呈现在页面中。如下图所示:</p>
+<p>##瀑布流实现方法<br>本章要介绍的是加载瀑布流的方法是，固定列数的浮动布局，根据你设备屏幕的宽度和加载图片的宽度来固定列数，之后又获取每一列图片的高度，将要加载的图片放在高度最小的那一列图片下面，循环数组不断的寻找高度最小的那一列图片，将图片放在下面实现基本的布局效果。然后再创建一个滚动条监听事件（当最后一张图片距顶的高度&lt;屏幕的高度+滚动条滚动的距离）时，就触发我们在页面动态的添加图片的事件（用JavasSript在Html DOM创建节点，并为其添加根元素）。</p>
+<p>####基本的操作步骤如下:</p>
+<ul>
+<li>在Html页面中创建承载图片的div</li>
+<li>将准备的图片都加加载到页面中</li>
+<li>为图片添加css样式</li>
+<li>获取第一排每一列图片的高度</li>
+<li>固定一排图片的宽度并且居中对齐</li>
+<li>将图片放在第一排高度最小的列下面</li>
+<li>改别图片高度并不断的循环获得高度最小的图片</li>
+<li>滚动条监听事件</li>
+<li>创建Json字符出模拟数据</li>
+<li>动态的创建节点并为其添加根元素</li>
+<li>调整动态图片的格式</li>
+</ul>
+<p>####创建承载图片的div容器</p>
+<ul>
+<li>首先创建一个能够承载所有图片的div容器，设置id=”container”</li>
+<li>创建一个能够承载单个图片的div容器，设置class=”box”</li>
+<li>创建一个div容器来设置图片的边框效果，使样式更加美观，设置class=”box_img”</li>
+<li>用img标签来加载图片</li>
+</ul>
+<p>##加载图片<br>在这里我准备的是一些关于宫崎骏动画的图片作为实现瀑布流的素材，首先在 id=”container”的div容器中加载图片，复制id=”box”承载单个图片的div容器，以及他的子元素id=”box_img”边框div容器，和<img>标签，并且分别修改图片的名称，将准备的所有图片都加载进来，如果你需要引用代码，就修改一下相关的图片路径。</p>
+<p>##设置css样式<br>上一讲加载进来的图片是在左边排成一列，这一讲用css来设置他的布局和样式</p>
+<ul>
+<li>首先用通配符”*”来设置页面中所有Html标签的所有内边距padding:0px和外边距margin:0px,选用通配符是因为它的优先级比所有其他选择器都要低（id选择器&gt;类选择器&gt;Html选择器&gt;通配符选择器）</li>
+<li>设置id=”container”相对定位，</li>
+<li>设置id=”box”的div容器外边距padding:5px，可以得到两种图片间的距离为10px,设置浮动float:left为向左浮动，让它一次布局排开</li>
+<li>设置id=”box_img”外边距padding和边框border和阴影box-shadow圆角border-radius的效果，</li>
+<li>设置图片的宽度width:150和高度height:auto自适应</li>
+</ul>
+<p>##获取图片<br>使用float布局有个缺点，当浏览器窗口的大小改变时，在页面中的图片会适应窗口来重新排列布局会带来一些不必要的麻烦，而这种效果应该使用响应式布局来实现。从本节课开始就是用JavaScript布局和改变Html中的一些样式和布局。本节操作是使用JavaScript的window对象来获取设备窗口的宽度和图的宽度，最终获得摆放图片的列数，但是在此之前要先获得所有的图片。</p>
+<p>####操作步骤详解</p>
+<ul>
+<li>先通过函数img_location(“container”,”box”);来获取所有的图片，并且传入参数container和box。</li>
+<li>在函数中用document.getElementById(“”);`获container所对应的div元素。</li>
+<li>再调用另一个函数 get_child_element(“”,””),来获取所有的box所对应的div元素。在函数中首先定义一个数组content_array =[]，通过container.getElementsByTagName(“*”)获取container对应div的所有子元素，并储存到数组all_content[]中，此时历遍all_content[]数组用all_content[i].className == box做一个判断,将className == box的放入数组content_array = []中并返回content_array = []数组。</li>
+</ul>
+<p>##固定宽度和居中对齐<br>前一节已经获取了图片，本节通过调用一个函数get_width(dparent, dcontent)来固定列数，其中dparent和dcontent是传过来的两个参数，</p>
+<ul>
+<li>在函数中先用img_width = dcontent[1].offsetWidth;获得图片的宽度,</li>
+<li>用 win_width = document.documentElement.clientWidth;获取当前设备的宽度</li>
+<li>用Math.floor(设备的宽度/图片宽度)函数将结果转化为整数,即图片的列数</li>
+<li>设置第一排图片的宽度=这个整数*图片宽度，即固定列数</li>
+<li>用JavaScript(DOM中的style)设置图片居中对齐</li>
+</ul>
+<p>##图片布局<br>就获得的图片布局的效果来看，并不是我们所想要的图片布局，因为它每一排的高度是由着一排中高度最高的图片所决定，在图片高度小的区域就会出现大量的空白。</p>
+<p>而我们要实现的效果是，第一排后的第一张图片放在第一排中高度最小的那一列图片下面，然后图片与这一列相加，改变这一列的整体高度。再让下一张图片再去寻找第一排中高度最小的那一列图片，将图片放在这一列图片下面，改变这一列图片的高度，以此类推，将所有图片都布局在页面中。</p>
+<p>在实现最终效果之前，要先获取第一排所有图片的高度，和其中高度度最小的图片，并将第一排以后的所有图片都放在高度最小的图片后面。</p>
+<p>##获取最小高度图片<br>调用函数min_image_locatin(dec_width,dcontent)其中参数 dec_width是在上一节中，将返回的列数值<br>声明一个数组box_height_array[i]存放第一排所有图片的高度<br>用for循环历遍所有的图片，用if（i&lt;dec_width)做一个判断，获取第一排所有图片的高度</p>
+<p>box_height_array[i] = dcontent[i].offsetHeight; //取得第一排图片的高度</p>
+<p>用函数Math.min.apply(null, box_height_array)获取第一排图片中高度最小的图片</p>
+<p>调用一个函数get_min_height(box_height_array, min_height)获取高度最小图片的位置，在函数中历遍所有图片将高度等于最小高度的图片返回<br>用JavaScript(DOM对象中的style属性)设置图片为绝对定位，和图片距顶的距离和距左的距离</p>
+<p>##图片布局<br>要实现的效果是将第一排后的第一张图片放在第一排中高度最小的那一列图片下面，然后图片与这一列相加，改变这一列的整体高度。再让下一张图片再去寻找第一排中高度最小的那一列图片，将图片放在这一列图片下面，改变这一列图片的高度，以此类推，将所有图片都布局在页面中。</p>
+<p>用下面的方法来改变高度最小的列的高度，然后循环数组重新寻找高度最小的列<br>box_height_array[min_index] = box_height_array[min_index] + dcontent[i].offsetHeight;</p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="https://lorizone0906.github.io/2017/07/22/一个简单的瀑布流实现/" data-id="cj6lw1h00000bvgn64zlkqioj" class="article-share-link">分享</a><div class="tags"></div><div class="post-nav"><a href="/2017/07/21/js-javascript单体模式/" class="next">js-javascript单体模式</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="https://lorizone0906.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/07/22/一个简单的瀑布流实现/">一个简单的瀑布流实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/21/js-javascript单体模式/">js-javascript单体模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/18/react入门/">react入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/17/移动端布局/">移动端布局</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/07/12/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/30/详细版用Supervisor守护你的Node-js进程/">详细版用Supervisor守护你的Node.js进程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/26/Javascript的继承与多态/">Javascript的继承与多态</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/06/23/流媒体协议介绍（rtp-rtcp-rtsp-rtmp-mms-hls）/">流媒体协议介绍（rtp/rtcp/rtsp/rtmp/mms/hls）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/02/深入理解CSS过渡transition/">深入理解CSS过渡transition</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/20/js继承的几种实现方式/">js继承的几种实现方式</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2017 <a href="/." rel="nofollow">这是一次旅行.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
